@@ -1,3 +1,5 @@
+const authRoutes = require('./routes/authRoutes');
+const listingRoutes = require('./routes/listingRoutes');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -21,3 +23,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/listings', listingRoutes);
