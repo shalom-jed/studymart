@@ -1,14 +1,29 @@
 const express = require('express');
-const { create, getAll, getOne } = require('../controllers/listingController');
-const { protect } = require('../middlewares/authMiddleware'); // Import the bouncer
-
 const router = express.Router();
 
-// Public routes
-router.get('/', getAll);
-router.get('/:id', getOne);
+// Import the specific functions from the controller
+const {
+    createListing,
+    getAllListings,
+    getListingById,
+    getMyListings,
+    deleteMyListing
+} = require('../controllers/listingController');
 
-// Protected route - requires JWT token
-router.post('/', protect, create);
+// Import your auth bouncer
+const { protect } = require('../middlewares/authMiddleware');
+
+// --- ROUTES ---
+
+// Public Routes
+router.get('/', getAllListings);
+
+// Protected Routes (Require JWT)
+router.post('/', protect, createListing);
+router.get('/my-listings', protect, getMyListings); // This MUST stay above /:id
+
+// Dynamic Routes (The :id acts as a wildcard, so it goes last)
+router.get('/:id', getListingById);
+router.delete('/:id', protect, deleteMyListing);
 
 module.exports = router;

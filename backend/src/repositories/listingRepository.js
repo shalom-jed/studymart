@@ -7,6 +7,12 @@ const createListing = async (listingData) => {
     });
 };
 
+const deleteListing = async (id) => {
+    return await prisma.listing.delete({
+        where: { id }
+    });
+};
+
 // UPGRADED: Now accepts search, subject, and category filters
 const getAllListings = async (query = {}) => {
     const { search, subject, category } = query;
@@ -42,8 +48,17 @@ const getListingById = async (id) => {
     });
 };
 
+const getListingsByUserId = async (userId) => {
+    return await prisma.listing.findMany({
+        where: { sellerId: userId },
+        orderBy: { createdAt: 'desc' }
+    });
+};
+
 module.exports = {
     createListing,
     getAllListings,
     getListingById,
+    getListingsByUserId,
+    deleteListing
 };
