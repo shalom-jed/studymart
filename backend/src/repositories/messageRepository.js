@@ -1,43 +1,25 @@
-const messageRepository = require('../repositories/messageRepository');
-const listingRepository = require('../repositories/listingRepository');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const sendMessage = async (req, res) => {
-    try {
-        const { listingId, content } = req.body;
-        const senderId = req.user.id;
-
-        const listing = await listingRepository.getListingById(listingId);
-        if (!listing) {
-            return res.status(404).json({ success: false, message: "Listing not found" });
-        }
-
-        if (listing.sellerId === senderId) {
-            return res.status(400).json({ success: false, message: "You cannot message yourself." });
-        }
-
-        const newMessage = await messageRepository.createMessage({
-            content,
-            listingId,
-            senderId,
-            receiverId: listing.sellerId
-        });
-
-        res.status(201).json({ success: true, data: newMessage });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+const createMessage = async (data) => {
+    return await prisma.message.create({
+        data: data,
+    });
 };
 
-const getMyInbox = async (req, res) => {
-    try {
-        const messages = await messageRepository.getInbox(req.user.id);
-        res.status(200).json({ success: true, data: messages });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+const getInbox = async (userId) => {
+    // Fetch messages where the logged-in user is the receiver
+    return await prisma.message.findMany({
+        where: { receiverId: userId },
+        include: {
+            sender: { select: { name: true, email: true } },
+            listing: { select: { title: true } }
+        },
+        orderBy: { createdAt: 'desc' } // Newest messages first
+    });
 };
 
 module.exports = {
-    sendMessage,
-    getMyInbox
+    createMessage,
+    getInbox
 };
