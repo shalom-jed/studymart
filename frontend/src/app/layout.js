@@ -1,22 +1,21 @@
-import { Inter } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata = {
-  title: "StudyMart - Student Marketplace",
-  description: "Buy and sell past papers, notes, and resource books.",
+  title: "EduMart - The Student Marketplace",
+  description: "Buy and sell past papers, notes, and resource books with verified students across Sri Lanka. The #1 educational marketplace for students.",
+  keywords: "past papers, study notes, resource books, student marketplace, Sri Lanka, A/L, O/L",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
-        {/* The Navbar will now stick to the top of EVERY page */}
+      <body className={`${inter.variable} ${outfit.variable} font-sans bg-[var(--em-gray-50)] text-[var(--em-gray-900)]`}>
         <Navbar />
-
-        {/* This represents whatever page the user is currently on */}
         {children}
       </body>
     </html>

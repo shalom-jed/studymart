@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres:StudyMart2026@db.wauybpfgxueqtvwgkkdu.supabase.co:5432/postgres"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -20,11 +21,12 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relationships
-  listings      Listing[]
-  messagesSent  Message[] @relation("Sender")
-  messagesRecv  Message[] @relation("Receiver")
-  reviewsGiven  Review[]  @relation("Reviewer")
-  reviewsRecv   Review[]  @relation("Reviewee")
+  listings        Listing[]
+  messagesSent    Message[]  @relation("Sender")
+  messagesRecv    Message[]  @relation("Receiver")
+  reviewsGiven    Review[]   @relation("Reviewer")
+  reviewsRecv     Review[]   @relation("Reviewee")
+  purchasesMade   Purchase[] @relation("Buyer")
 }
 
 model Listing {
@@ -37,13 +39,15 @@ model Listing {
   price       Float    // 0 means it's a donation
   status      String   @default("AVAILABLE") // "AVAILABLE", "SOLD"
   photos      String[] // Array of image URLs
+  viewCount   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // Relationships
   sellerId    String
-  seller      User     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  seller      User      @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   messages    Message[]
+  purchases   Purchase[]
 }
 
 model Message {
@@ -61,6 +65,20 @@ model Message {
   
   receiverId String
   receiver   User     @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  status    String   @default("PENDING") // "PENDING", "ACCEPTED", "DECLINED"
+  message   String?  // Optional note from buyer
+  createdAt DateTime @default(now())
+
+  // Relationships
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  buyerId   String
+  buyer     User     @relation("Buyer", fields: [buyerId], references: [id], onDelete: Cascade)
 }
 
 model Review {
