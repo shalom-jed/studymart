@@ -147,7 +147,7 @@ export default function ListingDetails() {
           <span style={{ color: "var(--em-gray-500)" }}>{listing.title}</span>
         </nav>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 28, alignItems: "flex-start" }}>
+        <div className="grid gap-7 sm:grid-cols-2 items-start">
 
           {/* ── LEFT: Images + Details ── */}
           <div>
@@ -220,7 +220,7 @@ export default function ListingDetails() {
           </div>
 
           {/* ── RIGHT: Seller + Actions ── */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="flex flex-col gap-4 sm:gap-6 sm:max-w-[380px]">
             {/* Price sticky card */}
             <div style={{ background: "white", borderRadius: "var(--em-radius-xl)", padding: "24px", boxShadow: "var(--em-shadow-lg)", border: "1px solid var(--em-gray-100)", position: "sticky", top: 120 }}>
 

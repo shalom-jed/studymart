@@ -236,47 +236,43 @@ function HomeContent() {
     <main style={{ minHeight: "100vh", background: "var(--em-gray-50)" }}>
 
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section style={{ background: "var(--em-gradient-hero)", padding: "72px 24px 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section className="bg-gradient-to-r from-[#0f172a] via-[#1e1b4b] to-[#312e81] text-center relative overflow-hidden py-16 sm:py-20">
         {/* Decorative blobs */}
-        <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "rgba(139,92,246,0.15)", top: -100, right: -100, filter: "blur(60px)" }} />
-        <div style={{ position: "absolute", width: 300, height: 300, borderRadius: "50%", background: "rgba(79,70,229,0.2)", bottom: -80, left: -80, filter: "blur(50px)" }} />
+        <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-purple-300/20 blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-indigo-700/20 blur-2xl" />
 
-        <div style={{ position: "relative", maxWidth: 720, margin: "0 auto" }}>
-          <div className="em-animate-fadeInUp" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "var(--em-radius-full)", padding: "6px 16px", marginBottom: 24 }}>
+        <div className="relative max-w-2xl mx-auto px-4">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1 mb-6 em-animate-fadeInUp">
             <span>🎓</span>
-            <span style={{ fontFamily: "var(--em-font-display)", fontSize: "0.85rem", color: "rgba(255,255,255,0.9)", fontWeight: 600 }}>Sri Lanka's #1 Student Marketplace</span>
+            <span className="font-semibold text-sm text-white/95">Sri Lanka's #1 Student Marketplace</span>
           </div>
 
-          <h1 className="em-animate-fadeInUp em-delay-1" style={{ fontFamily: "var(--em-font-display)", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 900, color: "white", lineHeight: 1.1, letterSpacing: "-0.03em", marginBottom: 20, opacity: 0 }}>
+          <h1 className="font-extrabold text-white text-[clamp(2.2rem,5vw,3.5rem)] leading-tight mb-5 em-animate-fadeInUp">
             Find the Study Materials<br />
-            <span style={{ background: "linear-gradient(90deg, #a5b4fc, #f472b6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>You Actually Need</span>
+            <span className="bg-clip-text text-transparent" style={{ background: 'linear-gradient(90deg,#a5b4fc,#f472b6)' }}>You Actually Need</span>
           </h1>
 
-          <p className="em-animate-fadeInUp em-delay-2" style={{ fontSize: "1.1rem", color: "rgba(255,255,255,0.7)", marginBottom: 36, lineHeight: 1.6, maxWidth: 560, margin: "0 auto 36px", opacity: 0 }}>
-            Past papers, notes, and resource books from verified students — at prices that make sense.
-          </p>
+          <p className="text-white/80 text-lg max-w-xl mx-auto mb-6 em-animate-fadeInUp">Past papers, notes, and resource books from verified students — at prices that make sense.</p>
 
           {/* Hero Search */}
-          <form onSubmit={handleSearch} className="em-animate-fadeInUp em-delay-3" style={{ display: "flex", gap: 0, maxWidth: 560, margin: "0 auto 24px", opacity: 0 }}>
-            <div style={{ flex: 1, display: "flex", background: "white", borderRadius: "var(--em-radius-full) 0 0 var(--em-radius-full)", overflow: "hidden", boxShadow: "var(--em-shadow-xl)" }}>
-              <span style={{ padding: "14px 16px 14px 20px", fontSize: "1.1rem" }}>🔍</span>
+          <form onSubmit={handleSearch} className="flex gap-2 max-w-xl mx-auto mb-6 em-animate-fadeInUp">
+            <div className="flex-1 flex items-center bg-white rounded-full shadow-xl overflow-hidden">
+              <span className="px-4 text-lg">🔍</span>
               <input
                 id="hero-search"
                 type="text"
                 placeholder="e.g., Physics past papers 2023..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                style={{ flex: 1, border: "none", outline: "none", fontFamily: "var(--em-font-body)", fontSize: "0.95rem", color: "var(--em-gray-900)", padding: "14px 0" }}
+                className="flex-1 bg-transparent outline-none px-3 py-4 text-sm text-gray-800"
               />
             </div>
-            <button type="submit" className="em-btn-primary" style={{ borderRadius: "0 var(--em-radius-full) var(--em-radius-full) 0", padding: "14px 28px", fontSize: "0.95rem", boxShadow: "none" }}>
-              Search
-            </button>
+            <button type="submit" className="rounded-full bg-indigo-600 text-white px-6 py-3 text-sm font-semibold">Search</button>
           </form>
 
-          <div className="em-animate-fadeInUp em-delay-4" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", opacity: 0 }}>
-            <Link href="/create-listing" className="em-btn-gold" style={{ padding: "11px 24px" }}>📤 Sell Your Materials</Link>
-            <Link href="/register" className="em-btn-secondary" style={{ borderColor: "rgba(255,255,255,0.4)", color: "white", background: "rgba(255,255,255,0.1)", padding: "11px 24px" }}>Join Free →</Link>
+          <div className="flex gap-3 justify-center flex-wrap em-animate-fadeInUp">
+            <Link href="/create-listing" className="px-4 py-2 rounded-full bg-yellow-500 text-white font-semibold">📤 Sell Your Materials</Link>
+            <Link href="/register" className="px-4 py-2 rounded-full border border-white/30 text-white bg-white/8 font-semibold">Join Free →</Link>
           </div>
         </div>
       </section>
